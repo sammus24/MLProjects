@@ -1,82 +1,140 @@
-# 🧠 1-Month Machine Learning + Deep Learning Roadmap (Hands-On)
+# 🧠 1-Month ML + DL Roadmap (Hands-On + Structured)
 
-This repository tracks my progress through a 4-week structured plan to learn Machine Learning and Deep Learning using:
-- 📘 _Hands-On Machine Learning_ by Aurélien Géron (3rd Edition)
-- 🎥 Coursera’s Machine Learning & Deep Learning Specialization (Andrew Ng)
-- 💻 Google ML Crash Course
-- 🛠️ Python, scikit-learn, TensorFlow/Keras, NumPy, pandas
+This GitHub repo tracks my 4-week structured journey to learn **Machine Learning and Deep Learning** hands-on using:
 
----
-
-## 📆 Weekly Plan
-
-### ✅ Week 1: Core ML Concepts + First Projects
-
-**Videos:**
-- Google ML Crash Course: Intro, Linear Regression, Loss, Evaluation
-- Coursera ML Specialization (Course 1 – Weeks 1–3)
-
-**Reading:**
-- [ ] Ch. 1 – ML Landscape  
-- [ ] Ch. 2 – End-to-End ML Project  
-- [ ] Ch. 3 – Classification  
-
-**Project:**
-- [ ] 🏠 Housing Price Predictor (regression)  
-- [ ] 🔢 Digit Classifier (KNN with `load_digits`)
+* 🎥 Coursera + Google ML Crash Course videos
+* 📘 *Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow* (3rd Edition)
+* 🧪 Weekly Python projects (Jupyter Notebooks)
 
 ---
 
-### ✅ Week 2: Decision Trees, Ensembles, SVMs
+## 📅 Weekly Breakdown
 
-**Videos:**
-- Coursera ML Specialization (Course 2 – Weeks 1–3)
-- Google ML Crash Course: Classification & Overfitting
+### ✅ Week 1: Supervised Learning – Regression & Classification
 
-**Reading:**
-- [ ] Ch. 4 – Training Models (Linear/Poly Regression)
-- [ ] Ch. 5 – SVMs  
-- [ ] Ch. 6 – Decision Trees  
-- [ ] Ch. 7 – Ensemble Methods  
+**🎥 Watch:**
 
-**Project:**
-- [ ] 🚢 Titanic Survival Prediction (LogReg, RF, SVM)
+* Coursera ML Course 1: Weeks 1–3 (Supervised Learning, Linear/Logistic Regression)
+* Google ML Crash Course: Regression, Classification, Overfitting
 
----
+**📘 Read:**
 
-### ✅ Week 3: Clustering + Intro to Deep Learning
+* Ch. 4 – Training Models (Linear Regression)
+* Ch. 3 – Classification (Logistic Regression, Metrics)
+* Ch. 2 – End-to-End ML Pipeline
 
-**Videos:**
-- Coursera ML Specialization (Course 2 – Week 4)
-- Deep Learning Specialization (Course 1 – Weeks 1–2)
+**💻 Projects:**
 
-**Reading:**
-- [ ] Ch. 8 – Dimensionality Reduction (PCA)
-- [ ] Ch. 9 – Clustering (KMeans, DBSCAN)
-- [ ] Ch. 10 – Intro to Neural Networks
-
-**Project:**
-- [ ] 🧑‍🤝‍🧑 Customer Segmentation with KMeans  
-- [ ] 🔁 Build MLP with `Keras` or `NumPy`
+* `housing_regression.ipynb`
+* `classification_metrics.ipynb`
 
 ---
 
-### ✅ Week 4: Deep Learning Projects (CNNs, RNNs)
+### ✅ Week 2: Trees, Ensembles, and SVMs
 
-**Videos:**
-- Deep Learning Specialization (Course 1 Week 3–4, Course 2, Course 3)
+**🎥 Watch:**
 
-**Reading:**
-- [ ] Ch. 11 – Training Deep Nets  
-- [ ] Ch. 12 – Custom Models in TF  
-- [ ] Ch. 13 – TF Data Pipelines  
-- [ ] Ch. 14 – CNNs  
-- [ ] Ch. 15 – RNNs & Transformers  
+* Coursera ML Course 2: Weeks 1–3 (Trees, Forests, SVM)
+* Google ML Crash Course: Generalization, Overfitting
 
-**Project (Pick One):**
-- [ ] 🖼️ CNN: Image Classifier (MNIST or CIFAR-10)  
-- [ ] 💬 LSTM: Sentiment Analysis (IMDB reviews)
+**📘 Read:**
+
+* Ch. 6 – Decision Trees
+* Ch. 7 – Ensemble Methods
+* Ch. 5 – SVMs (Intro only)
+
+**💻 Projects:**
+
+* `titanic_classifiers.ipynb`
 
 ---
 
-## 📂 Folder Structure (Suggested)
+### ✅ Week 3: Unsupervised Learning + Neural Net Intro
+
+**🎥 Watch:**
+
+* Coursera ML Course 2: Week 4 (Clustering)
+* Deep Learning Course 1: Weeks 1–2 (Neurons, MLPs)
+
+**📘 Read:**
+
+* Ch. 8 – PCA
+* Ch. 9 – Clustering
+* Ch. 10 – Neural Nets Overview
+
+**💻 Projects:**
+
+* `customer_segmentation_kmeans.ipynb`
+* `simple_mlp_keras.ipynb`
+
+---
+
+### ✅ Week 4: Deep Learning Projects (CNN + RNN)
+
+**🎥 Watch:**
+
+* Deep Learning Course 1 (Weeks 3–4)
+* Deep Learning Course 2 & 3 (CNNs, RNNs)
+* Optional: fast.ai Lesson 1
+
+**📘 Read:**
+
+* Ch. 11 – Training Deep Nets
+* Ch. 12 – Custom TensorFlow Models
+* Ch. 13 – tf.data Pipelines
+* Ch. 14 – CNNs
+* Ch. 15 – RNNs
+
+**💻 Projects:**
+
+* `cnn_image_classifier.ipynb`
+* (Optional) `text_sentiment_lstm.ipynb`
+
+---
+
+## 📂 Repo Structure
+
+```bash
+.
+├── week1/
+│   ├── housing_regression.ipynb
+│   └── classification_metrics.ipynb
+├── week2/
+│   └── titanic_classifiers.ipynb
+├── week3/
+│   ├── customer_segmentation_kmeans.ipynb
+│   └── simple_mlp_keras.ipynb
+├── week4/
+│   ├── cnn_image_classifier.ipynb
+│   └── text_sentiment_lstm.ipynb  # optional
+└── README.md
+```
+
+---
+
+## 🛠️ Tools Used
+
+* `scikit-learn`, `pandas`, `matplotlib`, `NumPy`
+* `TensorFlow` / `Keras`
+* `Jupyter Notebooks`
+
+---
+
+## ✅ Goal by End of Month
+
+* [ ] 8+ Completed projects in Python
+* [ ] Video notes from Coursera/Google
+* [ ] Core ML/DL knowledge: regression → CNNs/RNNs
+* [ ] Publish to GitHub/portfolio
+
+---
+
+### 🔗 References
+
+* [Hands-On ML GitHub](https://github.com/ageron/handson-ml3)
+* [DeepLearning.AI Courses](https://www.coursera.org/deeplearning)
+* [Google ML Crash Course](https://developers.google.com/machine-learning/crash-course)
+
+---
+
+Happy building! 🚀
