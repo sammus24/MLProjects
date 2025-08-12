@@ -1,0 +1,37 @@
+[Start of Document Excerpt]
+
+**Prime Credit Card - Statement**
+**Cardholder:** Alex Johnson
+**Account Number:** XXXX-XXXX-5678
+**Statement Period:** October 1, 2024 - October 31, 2024
+
+**Account Summary:**
+*   **Previous Balance:** \$1,800.50
+*   **Payments Received:** \$1,000.00
+*   **New Purchases:** \$1,250.75
+*   **Cash Advances:** \$0.00
+*   **Interest Charged:** \$15.20
+*   **New Balance:** \$2,065.95
+*   **Minimum Payment Due:** \$75.00
+*   **Payment Due Date:** November 25, 2024
+*   **Credit Limit:** \$5,000.00
+*   **Available Credit:** \$2,934.05
+
+**Transactions:**
+| Date        | Description             | Amount   |
+| :---------- | :---------------------- | :------- |
+| 10/03/2024  | Online Retailer - BuyNow | \$250.00 |
+| 10/05/2024  | Coffee Shop - DailyGrind | \$5.50   |
+| 10/08/2024  | Supermarket - FreshGoods | \$98.75  |
+| 10/12/2024  | Hotel Stay - GrandResort | \$550.00 |
+| 10/15/2024  | Payment Thank You - AutoPay | -\$1,000.00 |
+| 10/18/2024  | Ride Share - SwiftTaxi   | \$22.50  |
+| 10/22/2024  | Restaurant - The Bistro  | \$135.00 |
+| 10/26/2024  | Online Subscription - LearnIt | \$19.99  |
+| 10/29/2024  | Pharmacy - HealthFirst   | \$45.00  |
+| 10/30/2024  | Interest Charge          | \$15.20  |
+
+**Important Information:**
+Your Annual Percentage Rate (APR) for purchases is 19.99%.
+
+[End of Document Excerpt]

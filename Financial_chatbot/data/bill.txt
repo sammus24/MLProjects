@@ -1,0 +1,38 @@
+[Start of Document Excerpt]
+
+**Invoice # INV-2024-0015**
+
+**Date:** November 15, 2024
+**Due Date:** December 15, 2024
+
+**From:**
+Software Solutions Pro
+123 Tech Lane
+Innovation City, CA 90210
+Email: billing@softsolutionspro.com
+
+**Bill To:**
+MediCare Systems Ltd.
+456 Health Blvd.
+Wellness Town, NY 10001
+Contact: accounts@medicaresystems.com
+
+**Description of Services:**
+
+| Item ID   | Description                  | Quantity | Unit Price | Total Price |
+| :-------- | :--------------------------- | :------- | :--------- | :---------- |
+| SFT-PRO-01| Custom Software Development  | 80 hours | \$150.00   | \$12,000.00 |
+| SUP-LITE-03| Standard Support Package     | 1        | \$500.00   | \$500.00    |
+| HOST-PREM | Premium Hosting (Nov 2024)   | 1        | \$120.00   | \$120.00    |
+
+**Summary:**
+*   **Subtotal:** \$12,620.00
+*   **Sales Tax (8%):** \$1,009.60
+*   **Total Amount Due:** \$13,629.60
+
+**Payment Instructions:**
+Please make payment via bank transfer to Acme Bank, Account # 987654321.
+
+Thank you for your business!
+
+[End of Document Excerpt]

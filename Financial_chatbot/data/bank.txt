@@ -1,0 +1,28 @@
+[Start of Document Excerpt]
+
+**Acme Bank - Checking Account Statement**
+**Account Holder:** Jane Doe
+**Account Number:** XXXX-XXXX-1234
+**Statement Period:** October 1, 2024 - October 31, 2024
+
+**Summary:**
+*   **Beginning Balance:** \$5,200.50
+*   **Total Deposits:** \$3,500.00
+*   **Total Withdrawals/Debits:** \$2,150.75
+*   **Ending Balance:** \$6,549.75
+
+**Transactions:**
+| Date        | Description               | Debit    | Credit   | Balance   |
+| 10/02/2024  | Payroll Deposit           |          | \$2,800.00 | \$8,000.50 |
+| 10/03/2024  | Online Transfer - Rent    | \$1,500.00 |          | \$6,500.50 |
+| 10/05/2024  | Grocery Store - FOODMART  | \$125.50 |          | \$6,375.00 |
+| 10/10/2024  | ATM Withdrawal            | \$100.00 |          | \$6,275.00 |
+| 10/15/2024  | Interest Payment Received |          | \$0.50   | \$6,275.50 |
+| 10/18/2024  | Restaurant - Eatsville    | \$65.25  |          | \$6,210.25 |
+| 10/20/2024  | Online Deposit - Freelance|          | \$700.00 | \$6,910.25 |
+| 10/25/2024  | Utility Bill - PowerCo    | \$180.00 |          | \$6,730.25 |
+| 10/28/2024  | Subscription - StreamingTV| \$19.99  |          | \$6,710.26 |
+| 10/30/2024  | Mobile Phone Bill         | \$60.01  |          | \$6,650.25 |
+| 10/31/2024  | Service Charge            | \$0.50   |          | \$6,649.75 |
+
+[End of Document Excerpt]

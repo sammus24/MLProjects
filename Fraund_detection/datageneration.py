@@ -4,6 +4,9 @@ import uuid
 from datetime import datetime, timedelta
 from faker import Faker
 import random
+import json
+import boto3 # <--- Commented out for CSV generation focus
+import base64 # <--- Commented out for CSV generation focus
 
 # Initialize Faker for realistic data
 fake = Faker()
@@ -82,9 +85,9 @@ def generate_transaction(
 
             # If this is part of a velocity attack, timestamp should be very close to previous
             if previous_transaction_time:
-                 timestamp = previous_transaction_time + timedelta(seconds=random.randint(1, 10)) # Very quick succession
+                timestamp = previous_transaction_time + timedelta(seconds=random.randint(1, 10)) # Very quick succession
             else: # If it's the first in a velocity attack, make it close to last known legit tx
-                 timestamp = base_timestamp + timedelta(seconds=random.randint(1, 60))
+                timestamp = base_timestamp + timedelta(seconds=random.randint(1, 60))
 
 
         elif fraud_type == "stolen_card":
@@ -109,11 +112,13 @@ def generate_transaction(
         "longitude": longitude,
         "city": city,
         "country": country,
+        "home_lat": user_profile["base_lat"],  # <--- ADDED THIS LINE
+        "home_lon": user_profile["base_lon"],  # <--- ADDED THIS LINE
         "is_fraud": is_fraudulent # Ground truth label
     }
     return transaction_data
 
-
+# --- Existing generate_simulated_payment_data function (for CSV output) ---
 def generate_simulated_payment_data(
     num_users=100,
     total_transactions=10000,
@@ -131,10 +136,6 @@ def generate_simulated_payment_data(
     transactions = []
     current_timestamp = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
 
-    # To simulate a continuous stream, we will generate transactions sequentially by time
-    # and randomly pick a user for each transaction, while ensuring some patterns.
-
-    # Track last transaction time per user for velocity attacks
     last_user_transaction_time = {user_id: current_timestamp for user_id in user_ids}
 
     for i in range(total_transactions):
@@ -144,11 +145,9 @@ def generate_simulated_payment_data(
         chosen_user_id = random.choice(user_ids)
         chosen_user_profile = user_profiles[chosen_user_id]
         
-        # Decide if this transaction will be fraudulent
         is_fraud = random.random() < fraud_rate
 
-        # For velocity attacks, we might want to generate a small burst immediately after one fraud
-        if is_fraud and random.random() < 0.3: # 30% chance of a velocity attack starting here
+        if is_fraud and random.random() < 0.3:
              # Generate the first fraud transaction
             transactions.append(generate_transaction(
                 chosen_user_id,
@@ -165,13 +164,13 @@ def generate_simulated_payment_data(
                  transactions.append(generate_transaction(
                     chosen_user_id,
                     chosen_user_profile,
-                    current_timestamp, # Using same base for timestamp, will be adjusted by velocity attack logic
+                    current_timestamp,
                     is_fraudulent=True,
                     previous_transaction_time=last_user_transaction_time[chosen_user_id]
                 ))
                  last_user_transaction_time[chosen_user_id] = datetime.fromisoformat(transactions[-1]["timestamp"])
 
-        else: # Normal or other types of fraud
+        else:
             transactions.append(generate_transaction(
                 chosen_user_id,
                 chosen_user_profile,
@@ -181,12 +180,9 @@ def generate_simulated_payment_data(
             ))
             last_user_transaction_time[chosen_user_id] = datetime.fromisoformat(transactions[-1]["timestamp"])
 
-        # Advance global timestamp slightly to ensure sequential order in the stream
         current_timestamp += timedelta(seconds=random.randint(1, 10))
 
-
     df = pd.DataFrame(transactions)
-    # Ensure data is sorted by timestamp for realistic streaming order
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     df = df.sort_values(by="timestamp").reset_index(drop=True)
 
@@ -196,27 +192,122 @@ def generate_simulated_payment_data(
     print(f"Fraud rate: {df['is_fraud'].sum() / len(df):.4f}")
     return df
 
-if __name__ == "__main__":
-    # Example Usage:
-    # Generate 100,000 transactions for 500 users with a 0.5% fraud rate
-    # This will create a CSV file named 'simulated_transactions.csv' in your project directory
+# --- NEW generate_and_invoke_lambda_transactions function (for direct Lambda invocation) ---
+def generate_and_invoke_lambda_transactions(
+    num_users=100,
+    total_transactions=1000,
+    fraud_rate=0.005,
+    start_date="2023-01-01 00:00:00",
+    lambda_function_name='PaymentAnomalyDetectorML_BuildX',
+    lambda_region='us-east-1'
+):
+    """
+    Generates simulated payment transactions and directly invokes an AWS Lambda function for each.
+    """
+    print(f"Generating {total_transactions} transactions for {num_users} users and invoking Lambda: {lambda_function_name}...")
+
+    user_profiles = generate_user_profiles(num_users)
+    user_ids = list(user_profiles.keys())
     
+    # Initialize Lambda client
+    lambda_client = boto3.client('lambda', region_name=lambda_region)
+
+    current_timestamp = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
+    last_user_transaction_time = {user_id: current_timestamp for user_id in user_ids}
+
+    fraud_count = 0
+    invoked_count = 0
+
+    for i in range(total_transactions):
+        if i % (total_transactions // 10) == 0 and total_transactions > 100:
+            print(f"  {i}/{total_transactions} transactions generated...")
+
+        chosen_user_id = random.choice(user_ids)
+        chosen_user_profile = user_profiles[chosen_user_id]
+        
+        is_fraud = random.random() < fraud_rate
+
+        transactions_to_invoke = []
+
+        if is_fraud and random.random() < 0.3:
+            # Velocity attack
+            tx = generate_transaction(chosen_user_id, chosen_user_profile, current_timestamp, is_fraudulent=True, previous_transaction_time=last_user_transaction_time[chosen_user_id])
+            transactions_to_invoke.append(tx)
+            last_user_transaction_time[chosen_user_id] = datetime.fromisoformat(tx["timestamp"])
+            fraud_count += 1
+
+            num_velocity_tx = random.randint(1, 3)
+            for _ in range(num_velocity_tx):
+                tx_velocity = generate_transaction(chosen_user_id, chosen_user_profile, current_timestamp, is_fraudulent=True, previous_transaction_time=last_user_transaction_time[chosen_user_id])
+                transactions_to_invoke.append(tx_velocity)
+                last_user_transaction_time[chosen_user_id] = datetime.fromisoformat(tx_velocity["timestamp"])
+                fraud_count += 1
+        else:
+            tx = generate_transaction(chosen_user_id, chosen_user_profile, current_timestamp, is_fraudulent=is_fraud, previous_transaction_time=last_user_transaction_time[chosen_user_id])
+            transactions_to_invoke.append(tx)
+            if is_fraud:
+                fraud_count += 1
+        
+        for tx_data in transactions_to_invoke:
+            # Lambda expects a Kafka-like event structure
+            kafka_event_format = {
+              "eventSource": "custom:direct-invoke",
+              "records": {
+                "payments-0": [
+                  {
+                    "topic": "payments-direct-stream",
+                    "partition": 0,
+                    "offset": invoked_count,
+                    "timestamp": int(datetime.now().timestamp() * 1000),
+                    "timestampType": "CREATE_TIME",
+                    "key": None,
+                    "value": base64.b64encode(json.dumps(tx_data).encode('utf-8')).decode('utf-8')
+                  }
+                ]
+              }
+            }
+            
+            try:
+                response = lambda_client.invoke(
+                    FunctionName=lambda_function_name,
+                    InvocationType='Event',
+                    Payload=json.dumps(kafka_event_format)
+                )
+                invoked_count += 1
+            except Exception as e:
+                print(f"Error invoking Lambda for transaction {tx_data.get('transaction_id')}: {e}")
+
+        current_timestamp += timedelta(seconds=random.randint(1, 10))
+        
+    print("\nData invocation complete.")
+    print(f"Total transactions generated: {total_transactions}")
+    print(f"Total Lambda invocations: {invoked_count}")
+    print(f"Number of fraudulent transactions generated: {fraud_count}")
+    print(f"Simulated fraud rate: {fraud_count / total_transactions:.4f}")
+
+
+if __name__ == "__main__":
+    # --- Option 1: Generate CSV for Model Training (Current Focus) ---
+    """ print("Generating data to CSV for model training...")
     simulated_df = generate_simulated_payment_data(
-        num_users=500,
-        total_transactions=100000,
+        num_users=100, # Use 100 users for this run
+        total_transactions=10000, # Generate 10,000 transactions as requested
         fraud_rate=0.005,
         start_date="2023-01-01 00:00:00"
     )
 
-    # Save to CSV for inspection and later use (e.g., training a batch model)
     output_filename = "simulated_transactions.csv"
     simulated_df.to_csv(output_filename, index=False)
-    print(f"\nSimulated data saved to {output_filename}")
+    print(f"\nSimulated data saved to {output_filename}") """
 
-    # Display some information about the generated data
-    print("\nDataFrame Head:")
-    print(simulated_df.head())
-    print("\nFraudulent Transactions Sample:")
-    print(simulated_df[simulated_df['is_fraud']].head())
-    print("\nDataFrame Info:")
-    simulated_df.info()
+    # --- Option 2: Direct Lambda Invocation (Commented Out for now) ---
+    print("\n(Lambda invocation is currently commented out in __main__.)")
+    generate_and_invoke_lambda_transactions(
+        num_users=100,
+        total_transactions=1000,
+        fraud_rate=0.05,
+        start_date="2023-01-01 00:00:00",
+        lambda_function_name='PaymentAnomalyDetectorML',
+        lambda_region='us-east-1'
+     )
+    print("\nProducer script finished. Check AWS CloudWatch logs for Lambda invocation results.")

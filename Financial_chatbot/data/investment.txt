@@ -1,0 +1,31 @@
+[Start of Document Excerpt]
+
+**Elite Wealth Management - Investment Portfolio Summary**
+**Client:** Mr. Robert Smith
+**Report Date:** December 31, 2024
+**Portfolio ID:** EWM-INV-007
+
+**Overview:**
+Mr. Smith's portfolio remains well-diversified, with a strategic allocation towards growth equities and fixed-income assets. The strong performance in tech stocks during Q4 significantly contributed to overall gains.
+
+**Current Holdings:**
+
+| Asset Name        | Ticker | Quantity | Purchase Price | Current Price | Market Value | Unrealized Gain/Loss |
+| :---------------- | :----- | :------- | :------------- | :------------ | :----------- | :------------------- |
+| **Equities**      |        |          |                |               |              |                      |
+| AlphaTech Stock   | ATK    | 150      | \$120.00       | \$145.50      | \$21,825.00  | \$3,825.00           |
+| BetaBank Shares   | BBS    | 200      | \$55.00        | \$52.10       | \$10,420.00  | -\$580.00            |
+| Global Growth Fund| GGF    | 50       | \$80.00        | \$92.00       | \$4,600.00   | \$600.00             |
+| **Fixed Income**  |        |          |                |               |              |                      |
+| Corporate Bond 'A'| CORPA  | 10       | \$980.00       | \$995.00      | \$9,950.00   | \$150.00             |
+| Treasury Bill     | TBILL  | 20       | \$99.00        | \$99.50       | \$1,990.00   | \$10.00              |
+
+**Portfolio Performance (Year-to-Date):**
+*   **Total Portfolio Value:** \$48,785.00
+*   **Net Gain (YTD):** \$4,005.00
+*   **Percentage Gain (YTD):** 8.94%
+
+**Upcoming Actions:**
+We recommend rebalancing the portfolio by selling 50 shares of BetaBank to reallocate funds into AlphaTech, aiming to reduce exposure to underperforming sectors.
+
+[End of Document Excerpt]
