@@ -17,9 +17,7 @@ logger.setLevel(logging.INFO)
 OUTPUT_BUCKET = 'sammu-fraud-detection-results' # <--- YOUR S3 BUCKET NAME!
 S3_CLIENT = boto3.client('s3')
 
-# --- Autoencoder Model Definition (MUST match train_model.py) ---
-# These hyperparameters MUST match how your Autoencoder was trained
-# If your INPUT_DIM is not 7, update it here. It should be len(FEATURES).
+
 INPUT_DIM = 7 
 HIDDEN_DIM = [64, 32, 16]
 LATENT_DIM = 8
@@ -123,7 +121,7 @@ def feature_engineer_data_for_inference(transaction_data, last_transaction_time_
 AUTOENCODER_MODEL_PATH = 'autoencoder_model.joblib' # Path for PyTorch model state_dict
 SCALER_PATH = 'minmax_scaler.joblib' # Path for MinMaxScaler object
 
-# Features list (MUST match train_model.py's ADVANCED_FEATURES exactly)
+
 FEATURES = [
     "amount",
     "transaction_hour",
@@ -135,7 +133,7 @@ FEATURES = [
 ]
 
 # Anomaly Threshold (MUST be copied from train_model.py output)
-AUTOENCODER_ANOMALY_THRESHOLD = 0.0001 # <--- !!! PASTE YOUR THRESHOLD VALUE HERE !!!
+AUTOENCODER_ANOMALY_THRESHOLD = 0.0001
 
 # --- Load model and scaler outside handler for efficiency (cold start) ---
 ae_model = None
@@ -191,8 +189,7 @@ def lambda_handler(event, context):
                     logger.error(f"Feature engineering failed for transaction {transaction_data.get('transaction_id', 'N/A')}. Skipping inference.")
                     continue
 
-                # Create DataFrame from engineered features (single row)
-                # Ensure the order of features matches FEATURES list used for training
+               
                 transaction_features_df = pd.DataFrame([engineered_features_dict])[FEATURES]
 
                 # --- Real-Time Model Inference (Autoencoder) ---
